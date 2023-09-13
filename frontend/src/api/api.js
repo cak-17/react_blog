@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_HOST_ADDRESS = "http://localhost:8000/api"
+const API_HOST_ADDRESS = import.meta.env.VITE_API_HOST_URL
 
 class PostsAPI {
     constructor() {
