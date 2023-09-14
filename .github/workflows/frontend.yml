@@ -1,0 +1,20 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Build and Test Frontend Image"
+        run: docker build -t frontend:$(date +%s) ./docker/frontend/Dockerfile
+          docker pull wagoodman/dive
+          docker run --rm -it \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            wagoodman/dive:latest --ci frontend:$(date +%s) --lowestEfficiency=0.8 --highestUserWastedPercent=0.45
