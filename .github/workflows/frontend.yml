@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Build and Test Frontend Image"
-        run: docker build -t frontend:$(date +%s) ./docker/frontend/Dockerfile
+        run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:$(date +%s)
           docker pull wagoodman/dive
           docker run --rm -it \
             -v /var/run/docker.sock:/var/run/docker.sock \
