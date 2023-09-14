@@ -2,9 +2,21 @@
 
 ## React|Vite + ReactRedux|ReduxJS/Toolkit + Axios + Docker(nginx)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Clone the repo, create an `.env` and add the following variables:
 
-Currently, two official plugins are available:
+```bash
+    DJANGO_ALLOWED_HOSTS=*
+    DJANGO_SECRET_KEY=*
+    DJANGO_DEBUG=0 # 0 for False, 1 for True
+    CORS_ALLOWED_ORIGINS=http://localhost:5173 http://localhost:8000 http://api # add your own domains 
+    CSRF_TRUSTED_ORIGINS=http://localhost:5173 http://localhost:8000 http://api # add your own domains
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+to build and start the containers in detached mode use `make dup d` and `make ddown` to stop the containers.
+
+You can find a list of useful commands using `make help`
+
+### To add
+
+- React Router
+- Auth

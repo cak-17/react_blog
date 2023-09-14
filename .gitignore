@@ -10,7 +10,7 @@ dev/
 *.bak
 
 .env
-
+TODO.md
 # Logs
 logs
 *.log
