@@ -15,6 +15,6 @@ jobs:
       - name: "Build and Test Frontend Image"
         run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:$(date +%s)
           docker pull wagoodman/dive
-          docker run --rm -it \
+          docker run --rm -ti \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            wagoodman/dive:latest --ci frontend:$(date +%s) --lowestEfficiency=0.8 --highestUserWastedPercent=0.45
+            wagoodman/dive:latest --ci frontend:$(date +%s)
