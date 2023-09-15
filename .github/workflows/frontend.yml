@@ -10,10 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build image
-        run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:$(date +%s)
+        run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:dive_test
       - name: Dive
         uses: yuichielectric/dive-action@0.0.4
         with:
-          image: frontend:$(date +%s)
+          image: frontend:dive_test
           config-file: ${{ github.workspace }}/.dive-ci.yml
           github-token: ${{ secrets.GITHUB_TOKEN }}
