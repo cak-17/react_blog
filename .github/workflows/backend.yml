@@ -4,16 +4,32 @@ on: [push]
 
 jobs:
   dive:
+    name: Test Image
     runs-on: ubuntu-latest
-    name: Analyze image efficiency
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build image
-        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:dive_test --build-arg CORS_ALLOWED_ORIGINS=http://localhost --build-arg "CSRF_TRUSTED_ORIGINS=http://localhost"
-      - name: Dive
+
+      - name: Build Docker Image
+        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:ci_build --build-arg CORS_ALLOWED_ORIGINS=http://localhost --build-arg "CSRF_TRUSTED_ORIGINS=http://localhost"
+
+      - name: Run Dive Image Check
         uses: yuichielectric/dive-action@0.0.4
         with:
-          image: backend:dive_test
+          image: backend:ci_build
           config-file: ${{ github.workspace }}/.dive-ci.yml
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Trivy Vulnerability Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: backend:ci_build
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'

@@ -16,22 +16,31 @@ fbash: ## access frontend bash
 wbash: ## access webserver bash
 	docker exec -it webserver bash
 
-.PHONY: dup d
-dup d: ## build and start in detached mode
+.PHONY: d-up d
+d-up d: ## build and start in detached mode
 	docker-compose up --build -d
 
--PHONY: dup
-dup: ## start containers
+-PHONY: d-up
+d-up: ## start containers
 	docker-compose up
 
-.PHONY: ddown
-ddown: ## shuts down containers
+.PHONY: d-down
+d-down: ## shuts down containers
 	docker-compose down -v
 
-.PHONY: dbuild
-dbuild: ## build images
+.PHONY: d-build
+d-build: ## build images
 	docker-compose build
 
-.PHONY: dps
-dps: ## dock status
+.PHONY: d-ps
+d-ps: ## dock status
 	docker-compose ps
+
+
+## DIVE HELPERS
+
+.PHONY: run build dive
+run build dive: ## build image with default tag 'dive_test" for Dive
+	echo ${IMAGE_DIVE_VERSION}
+	. dev/dive.sh ${IMAGE_DIVE}
+	echo ${IMAGE_DIVE_VERSION}

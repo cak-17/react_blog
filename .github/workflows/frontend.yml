@@ -4,16 +4,32 @@ on: [push]
 
 jobs:
   dive:
+    name: Test Image
     runs-on: ubuntu-latest
-    name: Analyze image efficiency
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build image
-        run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:dive_test
-      - name: Dive
+
+      - name: Build Docker Image
+        run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:ci_build
+
+      - name: Run Dive Image Check
         uses: yuichielectric/dive-action@0.0.4
         with:
-          image: frontend:dive_test
+          image: frontend:ci_build
           config-file: ${{ github.workspace }}/.dive-ci.yml
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Trivy Vulnerability Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: frontend:ci_build
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
