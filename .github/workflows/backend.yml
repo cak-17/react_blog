@@ -8,7 +8,7 @@ jobs:
     name: Analyze image efficiency
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build image
         run: docker build ./backend --file docker/backend/Dockerfile --tag backend:dive_test --build-arg CORS_ALLOWED_ORIGINS=http://localhost --build-arg "CSRF_TRUSTED_ORIGINS=http://localhost"
       - name: Dive
