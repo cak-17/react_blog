@@ -1,21 +1,19 @@
 name: Frontend CI
 
-on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+on: [push]
 
 jobs:
-  build:
+  dive:
     runs-on: ubuntu-latest
-
+    name: Analyze image efficiency
     steps:
-      - uses: actions/checkout@v3
-      - name: "Build and Test Frontend Image"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build image
         run: docker build ./frontend --file docker/frontend/Dockerfile --tag frontend:$(date +%s)
-          docker pull wagoodman/dive
-          docker run --rm -ti \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            -v "./.dive-ci":"/.dive-ci" \
-            wagoodman/dive:latest --ci frontend:$(date +%s)
+      - name: Dive
+        uses: yuichielectric/dive-action@0.0.4
+        with:
+          image: "frontend:$(date +%s)"
+          config-file: ${{ github.workspace }}/.dive-ci.yml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
