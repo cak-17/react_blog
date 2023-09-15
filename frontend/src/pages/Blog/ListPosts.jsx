@@ -11,7 +11,7 @@ const ListPosts = () => {
     const isLoading = useSelector(selectIsLoading)
 
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         dispatch(fetchPosts())
     }, [dispatch])
@@ -19,11 +19,11 @@ const ListPosts = () => {
     const handleDelete = (id) => {
         dispatch(deletePost(id, info))
     }
-    
+
     const info = (id) => {
         message.info(`Post ${id} Deleted`)
     }
-    
+
 
     return (
         <Col span={12} offset={6}>
@@ -38,7 +38,7 @@ const ListPosts = () => {
                         </Card>
                     </Col>
                 </Row>
-            )) : 
+            )) :
             <div>Loading...</div>
         }
         </Col>

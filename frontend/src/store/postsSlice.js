@@ -14,8 +14,8 @@ export const postsSlice = createSlice({
     name: "posts",
     initialState: initialState,
     reducers: {
-        postsRequest: state => { 
-            state.loading = true 
+        postsRequest: state => {
+            state.loading = true
         },
         postsFailure: (state, action) => {
             state.loading = false
@@ -23,12 +23,12 @@ export const postsSlice = createSlice({
         },
 
         // GET ALL
-        fetchPostsSuccess: (state, action) => { 
-            state.loading = false 
+        fetchPostsSuccess: (state, action) => {
+            state.loading = false
             state.posts = action.payload
         },
         // POST
-        createPostSuccess: (state, action) => { 
+        createPostSuccess: (state, action) => {
             state.posts.push(action.payload)
             state.loading = false
         },
@@ -41,7 +41,7 @@ export const postsSlice = createSlice({
     }
 })
 
-export const { 
+export const {
     postsRequest,
     postsFailure,
     fetchPostsSuccess,
@@ -63,7 +63,7 @@ export const createPost = (postData, message) => {
     return async (dispatch) => {
         dispatch(postsRequest())
         await API.createPost(postData, message)
-            .then(data => { 
+            .then(data => {
                 console.log
                 dispatch(createPostSuccess(data))
                 dispatch(setMenu(1))
@@ -75,9 +75,9 @@ export const deletePost = (id, message) => {
     return async (dispatch) => {
         dispatch(postsRequest())
         await API.deletePost(id, message)
-            .then(data => { 
+            .then(data => {
                 console.log(data)
-                dispatch(deletePostSuccess(id)) 
+                dispatch(deletePostSuccess(id))
             })
             .catch(error => { dispatch(postsFailure(error.message)) })
     }

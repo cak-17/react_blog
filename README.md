@@ -8,7 +8,7 @@ Clone the repo, create an `.env` and add the following variables:
     DJANGO_ALLOWED_HOSTS=*
     DJANGO_SECRET_KEY=*
     DJANGO_DEBUG=0 # 0 for False, 1 for True
-    CORS_ALLOWED_ORIGINS=http://localhost:5173 http://localhost:8000 http://api # add your own domains 
+    CORS_ALLOWED_ORIGINS=http://localhost:5173 http://localhost:8000 http://api # add your own domains
     CSRF_TRUSTED_ORIGINS=http://localhost:5173 http://localhost:8000 http://api # add your own domains
 ```
 

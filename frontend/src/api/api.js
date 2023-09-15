@@ -15,7 +15,7 @@ class PostsAPI {
 
     // Fetch all Posts from API
     getAll = async () => {
-        try {    
+        try {
             const response = await this.axios.get(`${this.endpoint}`)
             return response.data
         } catch (error) { this.handleApiError(error) }

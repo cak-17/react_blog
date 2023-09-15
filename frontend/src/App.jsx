@@ -5,7 +5,7 @@ import './App.css'
 function App() {
 
   return (
-    <React.Fragment> 
+    <React.Fragment>
       <Blog/>
     </React.Fragment>
   )
