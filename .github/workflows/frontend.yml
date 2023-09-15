@@ -17,4 +17,5 @@ jobs:
           docker pull wagoodman/dive
           docker run --rm -ti \
             -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "./.dive-ci":"/.dive-ci" \
             wagoodman/dive:latest --ci frontend:$(date +%s)
