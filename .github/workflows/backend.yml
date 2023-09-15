@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build image
-        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:dive_test
+        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:latest --build-arg CORS_ALLOWED_ORIGINS=http://localhost --build-arg "CSRF_TRUSTED_ORIGINS=http://localhost"
       - name: Dive
         uses: yuichielectric/dive-action@0.0.4
         with:
