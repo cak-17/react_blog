@@ -5,13 +5,15 @@ ARG DJANGO_ALLOWED_HOSTS \
     DJANGO_SECRET_KEY \
     DJANGO_DEBUG \
     CORS_ALLOWED_ORIGINS \
-    CSRF_TRUSTED_ORIGINS
+    CSRF_TRUSTED_ORIGINS \
+    PROJECT_STAGE
 
 ENV DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS \
     DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY \
     DJANGO_DEBUG=$DJANGODEBUG \
     CORS_ALLOWED_ORIGINS=$CORS_ALLOWED_ORIGINS \
-    CSRF_TRUSTED_ORIGINS=$CSRF_TRUSTED_ORIGINS
+    CSRF_TRUSTED_ORIGINS=$CSRF_TRUSTED_ORIGINS \
+    PROJECT_STAGE=$PROJECT_STAGE
 
 WORKDIR /backend
 
@@ -30,14 +32,10 @@ RUN set -ex \
     && rm -f /var/cache/debconf/config.dat-old \
     && rm -f /var/log/apt/term.log
 
+USER appuser
 
 COPY . .
 
 EXPOSE 8000
 
-RUN python manage.py check \
-    && python manage.py makemigrations \
-    && python manage.py migrate \
-    && python manage.py collectstatic --verbosity 2
-
-USER appuser
+ENTRYPOINT [ "/backend/entrypoint.sh" ]
