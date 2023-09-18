@@ -10,7 +10,7 @@ dev/
 *.bak
 
 .env
-TODO.md
+
 # Logs
 .logs
 *.log
@@ -40,3 +40,5 @@ dist-ssr
 
 */static/*
 */media/*
+
+TODO.html

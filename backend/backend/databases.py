@@ -50,5 +50,4 @@ def set_database(stage: str = "dev") -> dict:
             db = TEST_DB
         case _:
             db = DEV_DB
-
     return db

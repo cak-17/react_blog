@@ -1,21 +1,49 @@
 import { useDispatch, useSelector } from "react-redux";
 import {Layout, Menu} from "antd"
-
+import React from "react";
 import ListPosts from "./ListPosts";
 import CreateNewPost from "./CreateNewPost";
 import { selectMenuPage, setMenu } from "../../store/mainSlice";
+import { selectUser } from "../../store/authSlice";
+import Login from "../../components/LoginForm";
 
+// ADD CONTENT SELECTOR TO HANDLE LOGIN OR PAGE
+// THEN ADD THIS FUCKING ROUTERS!!!!!!
+const BlogContent= () => {
+    const menuPage = useSelector(selectMenuPage)
+    const { Content } = Layout
+    const user = useSelector(selectUser)
+    let content = (
+        <Login/>
+    )
+
+    if (user) {
+        content = (
+        <React.Fragment>
+            <h2>Welcome {user}</h2>
+            {menuPage==1 ? <ListPosts/> : <CreateNewPost/>}
+        </React.Fragment>
+        )
+    }
+    return (
+        <Content>
+            {content}
+        </Content>
+    )
+}
 
 const Blog = () => {
     const menuPage = useSelector(selectMenuPage)
+
     console.log(menuPage)
     const dispatch = useDispatch()
-    const { Header, Content } = Layout
-
+    const { Header } = Layout
 
     const handleClick = e => {
         dispatch(setMenu(e))
     }
+
+
 
     return (
         <Layout>
@@ -25,9 +53,7 @@ const Blog = () => {
                     <Menu.Item key="2" onClick={() => handleClick(2)}>Create Post</Menu.Item>
                 </Menu>
             </Header>
-            <Content>
-                {menuPage==1 ? <ListPosts/> : <CreateNewPost/>}
-            </Content>
+            <BlogContent menuPage={menuPage} />
         </Layout>
     )
 }

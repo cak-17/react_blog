@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import PostsAPI from "../api/api";
+import PostsAPI from "../api/posts";
 import { setMenu } from "./mainSlice";
 
 const API = new PostsAPI()

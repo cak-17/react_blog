@@ -1,22 +1,16 @@
-import axios from "axios"
+import axiosInstance from "."
 
-const API_HOST_ADDRESS = import.meta.env.VITE_API_HOST_URL
 
 class PostsAPI {
     constructor() {
-        this.axios = axios.create({
-            baseURL: `${API_HOST_ADDRESS}`,
-            headers: {
-                "Content-type": "application/json",
-            },
-        })
-        this.endpoint = "/posts/"
+        this.axios =  axiosInstance
+        this.endpoint = "/posts"
     }
 
     // Fetch all Posts from API
     getAll = async () => {
         try {
-            const response = await this.axios.get(`${this.endpoint}`)
+            const response = await this.axios.get(`${this.endpoint}/`)
             return response.data
         } catch (error) { this.handleApiError(error) }
     }
@@ -24,7 +18,7 @@ class PostsAPI {
     // Create new Post
     createPost = async (data, message) => {
         try {
-            const response = await this.axios.post(`${this.endpoint}`, data)
+            const response = await this.axios.post(`${this.endpoint}/`, data)
             message(data.title)
             return response.data
         } catch (error) { this.handleApiError(error) }
@@ -33,7 +27,7 @@ class PostsAPI {
     // Delete Post by ID
     deletePost = async (id, message) => {
         try {
-            const response = await this.axios.delete(`${this.endpoint}${id}`)
+            const response = await this.axios.delete(`${this.endpoint}/${id}`)
             message(id)
             return response.data
         } catch (error) { this.handleApiError(error) }
