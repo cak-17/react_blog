@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AuthAPI from "../api/auth";
+import Cookies from "js-cookie"
+
 
 const apiInstance = new AuthAPI()
 
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: null,
-        auth: null,
+        user: "",
+        isAuth: false,
         loading: false,
         error: null
     },
@@ -16,8 +18,8 @@ const authSlice = createSlice({
             state.loading = true
         },
         authLoginSuccess: (state, action) => {
-            state.user = action.payload.user
-            state.auth = action.payload.auth
+            state.isAuth = true
+            state.user = action.payload
             state.loading = false
         },
         authFailure: (state, action) => {
@@ -25,8 +27,8 @@ const authSlice = createSlice({
             state.error = action.payload
         },
         authLogoutSuccess: (state) => {
-            state.user = null
-            state.auth = null
+            state.user = ""
+            state.isAuth = false
             state.loading = false
         },
     }
@@ -39,15 +41,18 @@ export const {
     authLogoutSuccess
 } = authSlice.actions
 
+// eslint-disable-next-line no-unused-vars
 export const login = (credentials, message) => {
     return async dispatch => {
         dispatch(authRequest())
-        await apiInstance.login(credentials, message)
+        await apiInstance.setCsrf()
+            .then(
+                await apiInstance.login(credentials)
             .then(data => {
-                console.log(data)
-                dispatch(authLoginSuccess(data))
+                dispatch(authLoginSuccess(credentials.username))
             })
             .catch(error => dispatch(authFailure(error)))
+            )
     }
 }
 
@@ -64,4 +69,5 @@ export const logout = () => {
 }
 export const selectUser = state => state.auth.user
 export const selectError = state => state.auth.error
+export const selectAuth = state => state.auth.isAuth
 export default authSlice.reducer

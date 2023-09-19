@@ -2,7 +2,6 @@ version: '3'
 
 services:
   backend:
-
     container_name: backend
 
     build:
@@ -25,7 +24,6 @@ services:
 
 
   frontend:
-
     container_name: frontend
 
     build:
@@ -38,23 +36,23 @@ services:
       - build_folder:/frontend/dist
 
   nginx:
-
     image: nginx:latest
-
     container_name: webserver
-
     ports:
       - "80:8080"
+      - "443:443"
 
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - build_folder:/var/www/frontend
       - static_folder:/var/www/backend/static
       - media_folder:/var/www/backend/media
+      - ./certs:/certs
 
     depends_on:
     - backend
     - frontend
+
 
 volumes:
   build_folder:

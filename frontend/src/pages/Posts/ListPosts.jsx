@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts, deletePost, selectPosts, selectIsLoading } from "../../store/postsSlice";
-import { Card, Row, Col, message} from "antd";
+
+import { Card, Row, Col, Typography, message, Spin} from "antd";
 
 import { DeleteOutlined } from "@ant-design/icons";
+import { Outlet } from "react-router-dom";
+import { selectAuth } from "../../store/authSlice";
 
 
 const ListPosts = () => {
     const posts = useSelector(selectPosts)
     const isLoading = useSelector(selectIsLoading)
+    const isAuthenticated = useSelector(selectAuth)
 
     const dispatch = useDispatch()
 
@@ -24,23 +28,37 @@ const ListPosts = () => {
         message.info(`Post ${id} Deleted`)
     }
 
-
     return (
         <Col span={12} offset={6}>
-            {!isLoading ? posts.map(p => (
+            <Col span={24} align="center">
+                <h2>Posts Index</h2>
+            </Col>
+            {isLoading ?
+            <Col span={24}>
+                <Row justify="center" align="middle">
+                    <Spin spinning={isLoading}/>
+                </Row>
+            </Col> : posts ? posts.map(p => {
+                let deleteAction = isAuthenticated ? <DeleteOutlined key="delete" onClick={() => handleDelete(p.id)}/> : ""
+                return (
                 <Row key={p.id} gutter={[48, 48]}>
                     <Col span={24}>
                         <Card
                             title={p.title}
                             style={{width: '100%'}}
-                            actions={[<DeleteOutlined key="delete" onClick={() => handleDelete(p.id)}/>]}>
+                            actions={[deleteAction]}>
                             <p>{p.content}</p>
                         </Card>
                     </Col>
                 </Row>
-            )) :
-            <div>Loading...</div>
+            )}) :
+            <Col span={24}>
+                <Row justify="center" align="middle">
+                    <Typography.Text>No Posts Found</Typography.Text>
+                </Row>
+            </Col>
         }
+        <Outlet />
         </Col>
     )
 }

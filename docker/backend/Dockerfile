@@ -38,7 +38,7 @@ RUN python manage.py collectstatic --no-input
 
 EXPOSE 8000
 
-USER appuser
+# USER appuser
 
 ENTRYPOINT [ "/backend/entrypoint.sh" ]
 

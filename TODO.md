@@ -41,6 +41,13 @@
 
 ## Backend
 
+- rename core.apps in auth.apps
+- add dashboard info:
+  - stats for users
+
+- write LoginView or def login with LoginSerializer.is_valid and point it to /api/auth/login
+- do we still need set-token?
+
 - fix logging in backend
 - authorization middleware
 - add createsuperuser with .env vars

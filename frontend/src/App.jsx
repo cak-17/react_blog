@@ -1,14 +1,14 @@
-import React from 'react'
-import Blog from './pages/Blog'
 import './App.css'
+import {
 
-function App() {
+  RouterProvider,
+} from "react-router-dom"
+
+import router from "./pages/routes"
+
+export default function App() {
 
   return (
-    <React.Fragment>
-      <Blog/>
-    </React.Fragment>
+    <RouterProvider router={router} />
   )
 }
-
-export default App

@@ -15,17 +15,16 @@ const axiosInstance = axios.create({
 class AuthAPI {
     constructor() {
         this.axios =  axiosInstance
-        this.endpoint = "/auth"
+        this.endpoint = "/core"
     }
 
     // Login
-    login = async (credentials, message) => {
+    login = async (credentials) => {
         try {
             const response = await this.axios.post(
                 `${this.endpoint}/login/`,
                 credentials,
             )
-            message(`${credentials.username} has logged in!`)
             return response.data
         } catch (error) { this.handleApiError(error.message) }
     }
@@ -38,7 +37,7 @@ class AuthAPI {
     }
 
     setCsrf = async () => {
-        await this.axios.get('/core/set-token/');
+        await this.axios.get(`core/set-token/`);
     }
 
 

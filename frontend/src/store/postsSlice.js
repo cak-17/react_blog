@@ -56,7 +56,7 @@ export const fetchPosts =  () => {
             .then(data => {
                 dispatch(fetchPostsSuccess(data))
             })
-            .catch(error => dispatch(postsFailure(error)))
+            .catch(error => dispatch(postsFailure(error.message)))
     }
 }
 export const createPost = (postData, message) => {
