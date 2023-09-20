@@ -1,13 +1,12 @@
-import { useState } from "react";
-import menuItems from "./menuItems";
-import { Menu } from "antd";
+import React, { useState } from 'react';
+import { Menu } from 'antd';
+import menuItems from './menuItems';
 
-
-const MenuWrapper= () => {
-    const [current, setCurrent] = useState("home");
+function MenuWrapper() {
+    const [current, setCurrent] = useState('home');
 
     const onClick = (e) => {
-        console.log("click ", e);
+        console.log('click ', e);
         setCurrent(e.key);
         // need to add dispatch here to navigate to correct url?
     };
@@ -17,10 +16,9 @@ const MenuWrapper= () => {
             onClick={onClick}
             selectedKeys={[current]}
             mode="horizontal"
-            // eslint-disable-next-line react/prop-types
             items={menuItems}
         />
     );
-};
+}
 
 export default MenuWrapper;

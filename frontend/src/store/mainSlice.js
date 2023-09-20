@@ -1,18 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 
 const mainSlice = createSlice({
-    name: "main",
+    name: 'main',
     initialState: {
         menuPage: 1,
     },
     reducers: {
         setMenu: (state, action) => {
-            state.menuPage = action.payload
-        }
-    }
-})
+            state.menuPage = action.payload;
+        },
+    },
+});
 
-export const { setMenu } = mainSlice.actions
-export const selectMenuPage = state => state.main.menuPage
+export const { setMenu } = mainSlice.actions;
+export const selectMenuPage = (state) => state.main.menuPage;
 
-export default mainSlice.reducer
+export default mainSlice.reducer;

@@ -1,4 +1,5 @@
-import { login, selectAuth } from '../../store/authSlice';
+/* eslint-disable no-template-curly-in-string */
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -7,14 +8,15 @@ import {
     Form,
     Input,
     Button,
-    message
-} from "antd";
+    message,
+} from 'antd';
+import { login, selectAuth } from '../../store/authSlice';
 
 const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
-    style: {maxWidth: 600}
-}
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+    style: { maxWidth: 600 },
+};
 
 const validateMessages = {
     required: '${label} is required!',
@@ -27,33 +29,31 @@ const validateMessages = {
     },
 };
 
+const info = (messageContent) => {
+    message.info(messageContent);
+};
 
-const LoginForm = () => {
-    const isAuthenticated = useSelector(selectAuth)
-    const dispatch = useDispatch()
+function LoginForm() {
+    const isAuthenticated = useSelector(selectAuth);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
     if (isAuthenticated) {
-        navigate("/")
+        navigate('/');
     }
 
     const handleSubmit = (values) => {
-        dispatch(login(values, info))
-    }
+        dispatch(login(values, info));
+    };
 
     const handleError = (error) => {
-        message.error(error)
-    }
-
-    const info = (messageContent) => {
-        message.info(messageContent)
-    }
+        message.error(error);
+    };
 
     return (
         <Col span={12} offset={6}>
             <h2>Please Login</h2>
-            <Row gutter={[48,48]}>
+            <Row gutter={[48, 48]}>
                 <Col span={24}>
                     <Form
                         {...layout}
@@ -69,12 +69,11 @@ const LoginForm = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your Username"
-                                }
+                                    message: 'Please input your Username',
+                                },
                             ]}
                         >
-                            <Input
-                            />
+                            <Input />
                         </Form.Item>
                         <Form.Item
                             label="Password"
@@ -82,23 +81,20 @@ const LoginForm = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your Password"
-                                }
+                                    message: 'Please input your Password',
+                                },
                             ]}
                         >
-                            <Input.Password
-                            />
+                            <Input.Password />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol}}>
+                        <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
                             <Button type="primary" htmlType="submit">Login</Button>
                         </Form.Item>
                     </Form>
                 </Col>
             </Row>
         </Col>
-    )
+    );
 }
-
-
 
 export default LoginForm;
