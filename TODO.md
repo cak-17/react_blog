@@ -28,7 +28,9 @@
 
 ## Docker
 
-- add non-root user to frontend
+- add non-root user to webserver
+- add non-root user to backend and fix file permissions
+- add postgresql image
 - manage logging files
 
 ## Git
@@ -41,67 +43,18 @@
 
 ## Backend
 
-- rename core.apps in auth.apps
+- startapp auth && cp -r core/ auth/
 - add dashboard info:
   - stats for users
-
-- write LoginView or def login with LoginSerializer.is_valid and point it to /api/auth/login
-- do we still need set-token?
-
 - fix logging in backend
 - authorization middleware
 - add createsuperuser with .env vars
-- maybe... split settings.py:
-
-      ```python
-      # backend/settings/__init__.py
-
-      """
-            Add all default and basic settings
-      """
-      import os
-
-      BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-      # backend/settings/prod.py
-      from . import *
-
-      DEBUG = False
-      ALLOWED_HOSTS = ['example.com']
-      DATABASES = {
-            'default': {
-                  'ENGINE': '...postgresql'
-            }
-      }
-
-      # backend/settings/dev.py
-      from . import *
-
-      DEBUG = True
-      ALLOWED_HOSTS = ['*']
-      DATABASES = {
-            'default': {
-                  'ENGINE': '...sqlite3'
-            }
-      }
-      ```
-
-      ```python
-      # Select correct settings at entrypoint.sh
-      # /backend/utils/
-      import os
-      PROJECT_STAGE = os.environ.get("PROJECT_STAGE", "Dev").lower()
-
-      # there may be issues if you don't set the PROJECT_STAGE var...
-      # let's find a way to work around that...
-
-      os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings.{PROJECT_STAGE}")
-
-      ```
+- move prod database to postgresql image
 
 ## Frontend
 
 - remove `src/*`  content
-- add react-routers
 - admin authorizations
 - dashboard
 - double check and refactor API calls
+- set up redux persist on Session Storage

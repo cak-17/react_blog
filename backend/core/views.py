@@ -1,12 +1,12 @@
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.contrib.auth import login, models
 from django.http import JsonResponse
-from .serializers import LoginSerializer, UserSerializer
-
-from django.contrib.auth import login
-from rest_framework.views import APIView
-from rest_framework import permissions
-from rest_framework.response import Response
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from rest_framework import permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import LoginSerializer, UserSerializer
 
 
 @ensure_csrf_cookie
@@ -26,11 +26,9 @@ class LoginView(APIView):
 
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        username = serializer.validated_data['user']
 
-        print(serializer.data)
+        login(request, username)
 
-
-        login(request, user)
-
-        return Response("Logged in")
+        user = UserSerializer(models.User.objects.get(username=username))
+        return Response(user.data, status=status.HTTP_200_OK)

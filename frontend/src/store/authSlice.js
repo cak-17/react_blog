@@ -7,7 +7,7 @@ const apiInstance = new AuthAPI();
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        user: '',
+        user: {},
         isAuth: false,
         loading: false,
         error: null,
@@ -26,7 +26,7 @@ const authSlice = createSlice({
             state.error = action.payload;
         },
         authLogoutSuccess: (state) => {
-            state.user = '';
+            state.user = {};
             state.isAuth = false;
             state.loading = false;
         },
@@ -46,7 +46,8 @@ export const login = (credentials, message) => async (dispatch) => {
         .then(
             await apiInstance.login(credentials)
                 .then((data) => {
-                    dispatch(authLoginSuccess(credentials.username));
+                    dispatch(authLoginSuccess(data));
+                    message();
                 })
                 .catch((error) => dispatch(authFailure(error))),
         );

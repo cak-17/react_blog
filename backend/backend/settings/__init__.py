@@ -1,22 +1,9 @@
-import os
 from pathlib import Path
 
-from django.core.management.utils import get_random_secret_key
-
-
-from . import databases
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-PROJECT_STAGE = os.environ.get("PROJECT_STAGE", "Development")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", get_random_secret_key())
-
-DEBUG = True if os.environ.get("DJANGO_DEBUG", True) else False
-
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,8 +53,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = databases.set_database(PROJECT_STAGE)
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -83,7 +68,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -92,28 +76,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-STATIC_URL = 'http://react:/static/'
+# need to check that URL
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOG_LEVEL = "DEBUG" if os.environ.get("DJANGO_DEBUG") else "INFO"
-
-# Django Rest Framework
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "http://localhost:5173").split(" ")
-
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost:5173").split(" ")
-CORS_ALLOW_ALL_ORIGINS = True
-
-
-REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    )
-}

@@ -7,7 +7,8 @@ if (API_HOST_ADDRESS === undefined) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: `${API_HOST_ADDRESS}`,
+    // baseURL: `${API_HOST_ADDRESS}`,
+    baseURL: 'api',
     headers: {
         'Content-type': 'application/json',
     },
