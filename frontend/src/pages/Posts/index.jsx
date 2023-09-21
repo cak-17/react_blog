@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import ListPosts from './ListPosts';
 import { selectUser, selectAuth } from '../../store/authSlice';
 
-function Posts() {
+const Posts = () => {
     const user = useSelector(selectUser);
     const isAuthenticated = useSelector(selectAuth);
     console.log(`The Session ID is ${Cookies.get('sessionid')}`);
@@ -17,6 +17,6 @@ function Posts() {
             <ListPosts />
         </>
     );
-}
+};
 
 export default Posts;

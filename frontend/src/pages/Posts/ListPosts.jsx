@@ -16,7 +16,7 @@ const info = (id) => {
     message.info(`Post ${id} Deleted`);
 };
 
-function ListPosts() {
+const ListPosts = () => {
     const posts = useSelector(selectPosts);
     const isLoading = useSelector(selectIsLoading);
     const isAuthenticated = useSelector(selectAuth);
@@ -69,5 +69,5 @@ function ListPosts() {
             <Outlet />
         </Col>
     );
-}
+};
 export default ListPosts;

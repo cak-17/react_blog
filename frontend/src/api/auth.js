@@ -21,7 +21,7 @@ class AuthAPI {
 
     logout = async () => {
         try {
-            const response = await this.axios.get(`${this.endpoint}/logout/`);
+            const response = await this.axios.get('auth/logout/');
             return response.data;
         } catch (error) {
             this.handleApiError(error.message);

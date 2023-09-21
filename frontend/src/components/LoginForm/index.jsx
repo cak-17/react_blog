@@ -33,7 +33,7 @@ const info = (messageContent) => {
     message.info(messageContent);
 };
 
-function LoginForm() {
+const LoginForm = () => {
     const isAuthenticated = useSelector(selectAuth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ function LoginForm() {
     }
 
     const handleSubmit = (values) => {
-        dispatch(login(values, info));
+        dispatch(login(values, info, navigate));
     };
 
     const handleError = (error) => {
@@ -95,6 +95,6 @@ function LoginForm() {
             </Row>
         </Col>
     );
-}
+};
 
 export default LoginForm;

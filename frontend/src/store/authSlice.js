@@ -40,25 +40,28 @@ export const {
     authLogoutSuccess,
 } = authSlice.actions;
 
-export const login = (credentials, message) => async (dispatch) => {
+export const login = (credentials, message, redirectTo) => async (dispatch) => {
     dispatch(authRequest());
     await apiInstance.setCsrf()
         .then(
             await apiInstance.login(credentials)
                 .then((data) => {
                     dispatch(authLoginSuccess(data));
-                    message();
+                    message(`Hello ${credentials.username}, your login was successful`);
+                    redirectTo('/');
                 })
                 .catch((error) => dispatch(authFailure(error))),
         );
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = (message, redirectTo) => async (dispatch) => {
     dispatch(authRequest());
     await apiInstance.logout()
         .then((data) => {
             console.log(data);
             dispatch(authLogoutSuccess());
+            message();
+            redirectTo('/');
         })
         .catch((error) => dispatch(authFailure(error)));
 };

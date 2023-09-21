@@ -57,4 +57,3 @@
 - admin authorizations
 - dashboard
 - double check and refactor API calls
-- set up redux persist on Session Storage

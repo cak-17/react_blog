@@ -5,8 +5,10 @@ import AppLayout from '.';
 
 import ListPosts from './Posts/ListPosts';
 import CreateNewPost from './Posts/CreateNewPost';
-import LoginForm from './LoginForm';
+import LoginForm from '../components/LoginForm'; // to become login page
 import ErrorPage from './error-page';
+import LogoutPage from '../components/Logout';
+import SearchResults from '../components/Menu/SearchResultPage';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <LoginForm />,
+            },
+            {
+                path: 'logout',
+                element: <LogoutPage />,
+            },
+            {
+                path: 'search',
+                element: <SearchResults />,
             },
         ],
     },

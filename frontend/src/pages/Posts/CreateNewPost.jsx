@@ -27,7 +27,7 @@ const info = (title) => {
     message.info(`Post ${title} Created`);
 };
 
-function CreateNewPost() {
+const CreateNewPost = () => {
     const dispatch = useDispatch();
 
     const handleSubmit = (formData) => {
@@ -69,6 +69,6 @@ function CreateNewPost() {
             </Row>
         </Col>
     );
-}
+};
 
 export default CreateNewPost;

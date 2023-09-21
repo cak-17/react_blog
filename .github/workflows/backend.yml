@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build Docker Image
-        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:ci_build --build-arg CORS_ALLOWED_ORIGINS=http://localhost --build-arg "CSRF_TRUSTED_ORIGINS=http://localhost"
+        run: docker build ./backend --file docker/backend/Dockerfile --tag backend:ci_build --build-arg  -build-arg DJANGO_SETTINGS_MODULE=backend.settings.prod
 
       - name: Run Dive Image Check
         uses: yuichielectric/dive-action@0.0.4
