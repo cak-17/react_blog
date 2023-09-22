@@ -24,9 +24,16 @@ const AppLayout = () => {
                 </Layout>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
-                ©2023 Created by
-                {' '}
-                <Link to="http://github.com/cak-17/">cak-17</Link>
+                <small>
+                    <div>
+                        Django / React WebApp Template
+                    </div>
+                    <div>
+                        ©2023 Created by
+                        {' '}
+                        <Link to="http://github.com/cak-17/">cak-17</Link>
+                    </div>
+                </small>
             </Footer>
         </Layout>
     );
