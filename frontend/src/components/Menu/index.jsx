@@ -1,18 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Menu, Input } from 'antd';
+import { Menu } from 'antd';
 import {
     HomeOutlined,
-    FileTextOutlined,
     UserOutlined,
     LogoutOutlined,
-    FileAddOutlined,
     StarTwoTone,
     LoginOutlined,
+    DashboardTwoTone,
+    ControlOutlined,
+    SettingOutlined,
+    FileTextTwoTone,
+    FileAddTwoTone,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
-
-const { Search } = Input;
 
 const MenuWrapper = () => {
     const isAuth = useSelector((state) => state.auth.isAuth);
@@ -32,10 +33,6 @@ const MenuWrapper = () => {
         console.log('click ', e);
     };
 
-    const handleSearch = (searchText) => {
-        navigate(`/search?query=${searchText}`);
-    };
-
     const menuItems = [
         {
             label: <Link to="/">Home</Link>,
@@ -49,19 +46,15 @@ const MenuWrapper = () => {
                 {
                     label: <Link to="/posts"> Read All Posts</Link>,
                     key: 'read-all-posts',
-                    icon: <FileTextOutlined />,
+                    icon: <FileTextTwoTone />,
                 },
                 {
                     label: <Link to="/add">Add New Post</Link>,
                     key: 'add-new-post',
                     disabled: !isAuth,
-                    icon: <FileAddOutlined />,
+                    icon: <FileAddTwoTone />,
                 },
             ],
-        },
-        {
-            label: <Search placeholder="Search for Posts Title..." onSearch={handleSearch} enterButton="Search" />,
-            key: 'search',
         },
         isAuth
             ? {
@@ -72,12 +65,20 @@ const MenuWrapper = () => {
                     {
                         label: 'Profile',
                         key: 'profile',
+                        icon: <ControlOutlined />,
                         disabled: true,
                     },
-                    user.is_superuser
+                    user.is_staff
                         ? {
                             label: 'Settings',
                             key: 'settings',
+                            icon: <SettingOutlined />,
+                        } : null,
+                    user.is_superuser
+                        ? {
+                            label: <Link to="/api/admin/">Admin</Link>,
+                            key: 'django-settings',
+                            icon: <DashboardTwoTone />,
                         } : null,
                     {
                         label: 'Divider',

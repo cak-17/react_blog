@@ -15,7 +15,7 @@ class AuthAPI {
             );
             return response.data;
         } catch (error) {
-            this.handleApiError(error.message);
+            this.handleApiError(error);
         }
     };
 
@@ -24,7 +24,7 @@ class AuthAPI {
             const response = await this.axios.get('auth/logout/');
             return response.data;
         } catch (error) {
-            this.handleApiError(error.message);
+            this.handleApiError(error);
         }
     };
 
@@ -34,7 +34,7 @@ class AuthAPI {
 
     // Default API error handler
     handleApiError(error) {
-        console.error(`API Error in ${this.endpoint}:`, error);
+        console.error(`API Error in ${this.endpoint}:`, error.message);
         throw error;
     }
 }

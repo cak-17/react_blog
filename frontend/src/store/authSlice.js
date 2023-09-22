@@ -10,7 +10,6 @@ const authSlice = createSlice({
         user: {},
         isAuth: false,
         loading: false,
-        error: null,
     },
     reducers: {
         authRequest: (state) => {
@@ -21,9 +20,8 @@ const authSlice = createSlice({
             state.user = action.payload;
             state.loading = false;
         },
-        authFailure: (state, action) => {
+        authFailure: (state) => {
             state.loading = false;
-            state.error = action.payload;
         },
         authLogoutSuccess: (state) => {
             state.user = {};
@@ -47,18 +45,21 @@ export const login = (credentials, message, redirectTo) => async (dispatch) => {
             await apiInstance.login(credentials)
                 .then((data) => {
                     dispatch(authLoginSuccess(data));
-                    message(`Hello ${credentials.username}, your login was successful`);
+                    message(`Hello ${credentials.username}, your login was successful.`);
                     redirectTo('/');
                 })
-                .catch((error) => dispatch(authFailure(error))),
+                .catch((error) => {
+                    dispatch(authFailure());
+                    message(`Something went wrong:\n ${error.message}`);
+                }),
         );
 };
 
 export const logout = (message, redirectTo) => async (dispatch) => {
     dispatch(authRequest());
     await apiInstance.logout()
-        .then((data) => {
-            console.log(data);
+        // eslint-disable-next-line no-unused-vars
+        .then((_data) => {
             dispatch(authLogoutSuccess());
             message();
             redirectTo('/');

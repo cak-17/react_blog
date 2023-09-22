@@ -8,7 +8,7 @@ import CreateNewPost from './Posts/CreateNewPost';
 import LoginForm from '../components/LoginForm'; // to become login page
 import ErrorPage from './error-page';
 import LogoutPage from '../components/Logout';
-import SearchResults from '../components/Menu/SearchResultPage';
+import SearchResults from './SearchResults';
 
 const router = createBrowserRouter([
     {

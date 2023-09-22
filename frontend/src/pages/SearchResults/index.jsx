@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { Space } from 'antd';
 
 const SearchResults = () => {
     const location = useLocation();
@@ -10,7 +11,13 @@ const SearchResults = () => {
     const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
-        <div>
+        <Space style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}
+        >
             <h2>Search Results</h2>
             <p>
                 You searched for:
@@ -27,7 +34,7 @@ const SearchResults = () => {
             ) : (
                 <p>No results found.</p>
             )}
-        </div>
+        </Space>
     );
 };
 

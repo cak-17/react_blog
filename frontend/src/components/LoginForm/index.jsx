@@ -29,8 +29,8 @@ const validateMessages = {
     },
 };
 
-const info = (messageContent) => {
-    message.info(messageContent);
+const info = (content) => {
+    message.info(content);
 };
 
 const LoginForm = () => {
@@ -46,10 +46,6 @@ const LoginForm = () => {
         dispatch(login(values, info, navigate));
     };
 
-    const handleError = (error) => {
-        message.error(error);
-    };
-
     return (
         <Col span={12} offset={6}>
             <h2>Please Login</h2>
@@ -59,7 +55,6 @@ const LoginForm = () => {
                         {...layout}
                         name="login-form"
                         onFinish={handleSubmit}
-                        onFinishFailed={handleError}
                         validateMessages={validateMessages}
                         autoComplete="off"
                     >

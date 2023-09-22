@@ -12,9 +12,13 @@ import {
 } from '../../store/postsSlice';
 import { selectAuth } from '../../store/authSlice';
 
-const info = (id) => {
-    message.info(`Post ${id} Deleted`);
-};
+const SpinningLoader = ({ isLoading }) => (
+    <Col span={24}>
+        <Row justify="center" align="middle">
+            <Spin spinning={isLoading} />
+        </Row>
+    </Col>
+);
 
 const ListPosts = () => {
     const posts = useSelector(selectPosts);
@@ -22,6 +26,10 @@ const ListPosts = () => {
     const isAuthenticated = useSelector(selectAuth);
 
     const dispatch = useDispatch();
+
+    const info = (id) => {
+        message.info(`Post ${id} Deleted`);
+    };
 
     useEffect(() => {
         dispatch(fetchPosts());
@@ -31,6 +39,31 @@ const ListPosts = () => {
         dispatch(deletePost(id, info));
     };
 
+    const renderedPosts = posts.length > 0
+        ? posts.map((p) => {
+            const deleteAction = isAuthenticated ? <DeleteOutlined key="delete" onClick={() => handleDelete(p.id)} /> : '';
+            return (
+                <Row key={p.id} gutter={[48, 48]}>
+                    <Col span={24}>
+                        <Card
+                            title={p.title}
+                            style={{ width: '100%' }}
+                            actions={[deleteAction]}
+                        >
+                            <p>{p.content}</p>
+                        </Card>
+                    </Col>
+                </Row>
+            );
+        })
+        : (
+            <Col span={24}>
+                <Row justify="center" align="middle">
+                    <Typography.Text>No Posts Found</Typography.Text>
+                </Row>
+            </Col>
+        );
+
     return (
         <Col span={12} offset={6}>
             <Col span={24} align="center">
@@ -38,34 +71,8 @@ const ListPosts = () => {
             </Col>
             {isLoading
                 ? (
-                    <Col span={24}>
-                        <Row justify="center" align="middle">
-                            <Spin spinning={isLoading} />
-                        </Row>
-                    </Col>
-                ) : posts ? posts.map((p) => {
-                    const deleteAction = isAuthenticated ? <DeleteOutlined key="delete" onClick={() => handleDelete(p.id)} /> : '';
-                    return (
-                        <Row key={p.id} gutter={[48, 48]}>
-                            <Col span={24}>
-                                <Card
-                                    title={p.title}
-                                    style={{ width: '100%' }}
-                                    actions={[deleteAction]}
-                                >
-                                    <p>{p.content}</p>
-                                </Card>
-                            </Col>
-                        </Row>
-                    );
-                })
-                    : (
-                        <Col span={24}>
-                            <Row justify="center" align="middle">
-                                <Typography.Text>No Posts Found</Typography.Text>
-                            </Row>
-                        </Col>
-                    )}
+                    <SpinningLoader isLoading={isLoading} />
+                ) : renderedPosts}
             <Outlet />
         </Col>
     );

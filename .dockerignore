@@ -12,6 +12,7 @@ dev/
 .env
 TODO.md
 TODO.html
+
 # Logs
 .logs
 *.log
@@ -40,4 +41,3 @@ dist-ssr
 
 */static/*
 */media/*
-

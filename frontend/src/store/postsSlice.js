@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import PostsAPI from '../api/posts';
-import { setMenu } from './mainSlice';
 
 const API = new PostsAPI();
 
@@ -58,21 +57,23 @@ export const fetchPosts = () => async (dispatch) => {
         })
         .catch((error) => dispatch(postsFailure(error.message)));
 };
-export const createPost = (postData, message) => async (dispatch) => {
+export const createPost = (postData, message, redirectTo) => async (dispatch) => {
     dispatch(postsRequest());
-    await API.createPost(postData, message)
+    await API.createPost(postData)
         .then((data) => {
             dispatch(createPostSuccess(data));
-            dispatch(setMenu(1));
+            message(postData.title);
+            redirectTo('/');
         })
         .catch((error) => dispatch(postsFailure(error.message)));
 };
 export const deletePost = (id, message) => async (dispatch) => {
     dispatch(postsRequest());
-    await API.deletePost(id, message)
+    await API.deletePost(id)
         .then((data) => {
             console.log(data);
             dispatch(deletePostSuccess(id));
+            message(id);
         })
         .catch((error) => { dispatch(postsFailure(error.message)); });
 };

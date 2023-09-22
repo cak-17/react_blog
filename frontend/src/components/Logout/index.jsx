@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     Row,
@@ -19,6 +19,11 @@ const info = () => {
 const LogoutPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isAuthenticated = useSelector((state) => state.auth.isAuth);
+
+    if (!isAuthenticated) {
+        navigate('/');
+    }
 
     const handleLogout = () => {
         dispatch(logout(info, navigate));

@@ -3,6 +3,7 @@ import React from 'react';
 import {
     Col, Row, Form, Input, Button, message,
 } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../store/postsSlice';
 
@@ -23,19 +24,20 @@ const validateMessages = {
     },
 };
 
-const info = (title) => {
-    message.info(`Post ${title} Created`);
-};
-
 const CreateNewPost = () => {
     const dispatch = useDispatch();
-
-    const handleSubmit = (formData) => {
-        dispatch(createPost(formData, info));
-    };
+    const navigate = useNavigate();
 
     const handleError = (error) => {
         message.error(error);
+    };
+
+    const info = (title) => {
+        message.info(`Post ${title} Created`);
+    };
+
+    const handleSubmit = (formData) => {
+        dispatch(createPost(formData, info, navigate));
     };
 
     return (

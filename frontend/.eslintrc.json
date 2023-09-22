@@ -19,6 +19,7 @@
             2,
             { "namedComponents": "arrow-function" }
         ],
+        "react/prop-types": [ 0 ],
         "react/jsx-props-no-spreading": [ 0 ],
         "react/jsx-indent": [
             "error",
@@ -32,6 +33,6 @@
             "error",
             4
         ],
-        "import/no-extraneous-dependencies": [ 0]
+        "import/no-extraneous-dependencies": [ 0 ]
     }
 }

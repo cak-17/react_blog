@@ -15,19 +15,17 @@ class PostsAPI {
     };
 
     // Create new Post
-    createPost = async (data, message) => {
+    createPost = async (data) => {
         try {
             const response = await this.axios.post(`${this.endpoint}/`, data);
-            message(data.title);
             return response.data;
         } catch (error) { this.handleApiError(error); }
     };
 
     // Delete Post by ID
-    deletePost = async (id, message) => {
+    deletePost = async (id) => {
         try {
             const response = await this.axios.delete(`${this.endpoint}/${id}`);
-            message(id);
             return response.data;
         } catch (error) { this.handleApiError(error); }
     };
