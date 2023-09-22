@@ -58,3 +58,4 @@
 - dashboard
 - double check and refactor API calls
 - **MOBILE FIRST!!!!** change to Material UI?
+- configure `notistack`  to handle notifications for the whole app

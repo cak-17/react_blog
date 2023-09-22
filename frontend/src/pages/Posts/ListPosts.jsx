@@ -1,26 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-    Card, Row, Col, Typography, message, Spin,
-} from 'antd';
-
-import { DeleteOutlined } from '@ant-design/icons';
 import { Outlet } from 'react-router-dom';
 import {
     fetchPosts, deletePost, selectPosts, selectIsLoading,
 } from '../../store/postsSlice';
 import { selectAuth } from '../../store/authSlice';
+import { useSnackbar } from 'notistack';
 
-const SpinningLoader = ({ isLoading }) => (
-    <Col span={24}>
-        <Row justify="center" align="middle">
-            <Spin spinning={isLoading} />
-        </Row>
-    </Col>
-);
 
 const ListPosts = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const posts = useSelector(selectPosts);
     const isLoading = useSelector(selectIsLoading);
     const isAuthenticated = useSelector(selectAuth);
@@ -28,7 +18,7 @@ const ListPosts = () => {
     const dispatch = useDispatch();
 
     const info = (id) => {
-        message.info(`Post ${id} Deleted`);
+        enqueueSnackbar(`Post ${id} Deleted`, 'success');
     };
 
     useEffect(() => {
@@ -39,42 +29,33 @@ const ListPosts = () => {
         dispatch(deletePost(id, info));
     };
 
-    const renderedPosts = posts.length > 0
-        ? posts.map((p) => {
-            const deleteAction = isAuthenticated ? <DeleteOutlined key="delete" onClick={() => handleDelete(p.id)} /> : '';
-            return (
-                <Row key={p.id} gutter={[48, 48]}>
-                    <Col span={24}>
-                        <Card
-                            title={p.title}
-                            style={{ width: '100%' }}
-                            actions={[deleteAction]}
-                        >
-                            <p>{p.content}</p>
-                        </Card>
-                    </Col>
-                </Row>
-            );
-        })
-        : (
-            <Col span={24}>
-                <Row justify="center" align="middle">
-                    <Typography.Text>No Posts Found</Typography.Text>
-                </Row>
-            </Col>
-        );
+    // const renderedPosts = posts.length > 0
+    //     ? posts.map((p) => {
+    //         const deleteAction = isAuthenticated ? <DeleteOutlined key="delete" onClick={() => handleDelete(p.id)} /> : '';
+    //         return (
+    //             <Row key={p.id} gutter={[48, 48]}>
+    //                 <Col span={24}>
+    //                     <Card
+    //                         title={p.title}
+    //                         style={{ width: '100%' }}
+    //                         actions={[deleteAction]}
+    //                     >
+    //                         <p>{p.content}</p>
+    //                     </Card>
+    //                 </Col>
+    //             </Row>
+    //         );
+    //     })
+    //     : (
+    //         <Col span={24}>
+    //             <Row justify="center" align="middle">
+    //                 <Typography.Text>No Posts Found</Typography.Text>
+    //             </Row>
+    //         </Col>
+    //     );
 
     return (
-        <Col span={12} offset={6}>
-            <Col span={24} align="center">
-                <h2>Posts Index</h2>
-            </Col>
-            {isLoading
-                ? (
-                    <SpinningLoader isLoading={isLoading} />
-                ) : renderedPosts}
-            <Outlet />
-        </Col>
+       0
     );
 };
 export default ListPosts;

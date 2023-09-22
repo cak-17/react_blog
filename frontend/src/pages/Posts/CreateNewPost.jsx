@@ -1,11 +1,10 @@
 /* eslint-disable no-template-curly-in-string */
 import React from 'react';
-import {
-    Col, Row, Form, Input, Button, message,
-} from 'antd';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../store/postsSlice';
+import { useSnackbar } from 'notistack';
 
 const layout = {
     labelCol: { span: 8 },
@@ -27,13 +26,14 @@ const validateMessages = {
 const CreateNewPost = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleError = (error) => {
-        message.error(error);
+        enqueueSnackbar(`Oops, something happened! ${error}`, 'error');
     };
 
     const info = (title) => {
-        message.info(`Post ${title} Created`);
+        enqueueSnackbar(`Post ${title} Created`, 'success');
     };
 
     const handleSubmit = (formData) => {
@@ -41,35 +41,7 @@ const CreateNewPost = () => {
     };
 
     return (
-        <Col span={12} offset={6}>
-            <h2>Add New Post</h2>
-            <Row gutter={[48, 48]}>
-                <Col span={24}>
-                    <Form
-                        {... layout}
-                        name="nest-messages"
-                        onFinish={handleSubmit}
-                        onFinishFailed={handleError}
-                        validateMessages={validateMessages}
-                    >
-                        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item name="content" label="Content" rules={[{ required: true }]}>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-
-                    </Form>
-                </Col>
-            </Row>
-        </Col>
+       0
     );
 };
 

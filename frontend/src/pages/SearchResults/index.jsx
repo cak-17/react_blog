@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Space } from 'antd';
+import { Container } from '@mui/material';
 
 const SearchResults = () => {
     const location = useLocation();
@@ -11,7 +11,7 @@ const SearchResults = () => {
     const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
-        <Space style={{
+        <Container style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -34,7 +34,7 @@ const SearchResults = () => {
             ) : (
                 <p>No results found.</p>
             )}
-        </Space>
+        </Container>
     );
 };
 
