@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import AuthAPI from '../api/auth';
-
-const apiInstance = new AuthAPI();
+import { getUserIcon } from '../utils/Icons';
 
 const authSlice = createSlice({
     name: 'auth',
@@ -19,6 +18,7 @@ const authSlice = createSlice({
             state.isAuth = true;
             state.user = action.payload;
             state.loading = false;
+            state.user.icon = getUserIcon(state.user);
         },
         authFailure: (state) => {
             state.loading = false;
@@ -40,9 +40,9 @@ export const {
 
 export const login = (credentials, message, redirectTo) => async (dispatch) => {
     dispatch(authRequest());
-    await apiInstance.setCsrf()
+    await AuthAPI.setCsrf()
         .then(
-            await apiInstance.login(credentials)
+            await AuthAPI.login(credentials)
                 .then((data) => {
                     dispatch(authLoginSuccess(data));
                     message(`Hello ${credentials.username}, your login was successful.`);
@@ -57,7 +57,7 @@ export const login = (credentials, message, redirectTo) => async (dispatch) => {
 
 export const logout = (message, redirectTo) => async (dispatch) => {
     dispatch(authRequest());
-    await apiInstance.logout()
+    await AuthAPI.logout()
         // eslint-disable-next-line no-unused-vars
         .then((_data) => {
             dispatch(authLogoutSuccess());

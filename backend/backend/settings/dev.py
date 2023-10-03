@@ -10,7 +10,9 @@ ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://fracat-think.local:5174",
+    "http://fra-srv.mywire.org"
 ]
 LOG_LEVEL = "DEBUG"
 
@@ -22,8 +24,7 @@ DATABASES = {
 }
 
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-    )
-}
+REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] = (
+    "rest_framework.authentication.SessionAuthentication",
+)
+

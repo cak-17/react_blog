@@ -15,6 +15,7 @@ services:
       - "8000:8000"
 
     volumes:
+      - ./backend:/backend
       - static_folder:/backend/static
       - media_folder:/backend/media
 

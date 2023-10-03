@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { ArrowBack } from '@mui/icons-material';
 
-const BackButton = (props) => {
+const BackButton = ({ label }) => {
     const navigate = useNavigate();
     return (
-        // eslint-disable-next-line react/destructuring-assignment, react/prop-types
-        <Button variant="contained" endIcon={<ArrowBack />} onClick={() => navigate(-1)}>{props.label ? props.label : 'Back'}</Button>
+        <Button variant="contained" endIcon={<ArrowBack />} onClick={() => navigate(-1)}>{label || 'Back'}</Button>
     );
 };
 

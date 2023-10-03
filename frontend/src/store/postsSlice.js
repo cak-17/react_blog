@@ -2,12 +2,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import PostsAPI from '../api/posts';
 
-const API = new PostsAPI();
-
 const initialState = {
     posts: [],
+    count: 0,
+    next: '',
+    previous: '',
     loading: false,
     error: null,
+    selectedPost: null,
 };
 
 export const postsSlice = createSlice({
@@ -22,11 +24,22 @@ export const postsSlice = createSlice({
             state.error = action.payload;
         },
 
-        // GET ALL
+        // GET
         fetchPostsSuccess: (state, action) => {
             state.loading = false;
-            state.posts = action.payload;
+            state.posts = action.payload.results;
+            state.count = action.payload.count;
+            state.previous = action.payload.previous;
+            state.next = action.payload.next;
         },
+
+        // GET {ID}
+        fetchPostSuccess: (state, action) => {
+            state.loading = false;
+            console.log(`fetch post success ${action.payload}`)
+            state.selectedPost = action.payload;
+        },
+
         // POST
         createPostSuccess: (state, action) => {
             state.posts.push(action.payload);
@@ -34,7 +47,6 @@ export const postsSlice = createSlice({
         },
         // DELETE
         deletePostSuccess: (state, action) => {
-            console.log(state.posts.filter((post) => post.id !== action.payload));
             state.posts = state.posts.filter((post) => post.id !== action.payload);
             state.loading = false;
         },
@@ -45,13 +57,24 @@ export const {
     postsRequest,
     postsFailure,
     fetchPostsSuccess,
+    fetchPostSuccess,
     createPostSuccess,
     deletePostSuccess,
 } = postsSlice.actions;
 
+export const fetchPost = (id) => async (dispatch) => {
+    dispatch(postsRequest());
+    await PostsAPI.getByID(id)
+        .then((data) => {
+            console.log(data)
+            dispatch(fetchPostSuccess(data));
+        })
+        .catch((error) => dispatch(postsFailure(error.massage)));
+};
+
 export const fetchPosts = () => async (dispatch) => {
     dispatch(postsRequest());
-    await API.getAll()
+    await PostsAPI.getAll()
         .then((data) => {
             dispatch(fetchPostsSuccess(data));
         })
@@ -59,21 +82,22 @@ export const fetchPosts = () => async (dispatch) => {
 };
 export const createPost = (postData, message, redirectTo) => async (dispatch) => {
     dispatch(postsRequest());
-    await API.createPost(postData)
+    await PostsAPI.createPost(postData)
         .then((data) => {
             dispatch(createPostSuccess(data));
-            message(postData.title);
-            redirectTo('/');
+            message();
+            redirectTo(`/posts/${data.id}`);
         })
         .catch((error) => dispatch(postsFailure(error.message)));
 };
-export const deletePost = (id, message) => async (dispatch) => {
+export const deletePost = (id, message, redirectTo) => async (dispatch) => {
     dispatch(postsRequest());
-    await API.deletePost(id)
-        .then((data) => {
-            console.log(data);
+    await PostsAPI.deletePost(id)
+        .then((_data) => {
+            console.log(_data);
             dispatch(deletePostSuccess(id));
-            message(id);
+            message();
+            redirectTo('/posts');
         })
         .catch((error) => { dispatch(postsFailure(error.message)); });
 };

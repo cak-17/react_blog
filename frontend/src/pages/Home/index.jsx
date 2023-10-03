@@ -1,22 +1,38 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-
-import SearchForm from '../../components/SearchForm';
+import { Box, Container } from '@mui/material';
 import { selectAuth, selectUser } from '../../store/authSlice';
 
 const Home = () => {
     const isAuthenticated = useSelector(selectAuth);
     const user = useSelector(selectUser);
 
-    const userName = isAuthenticated ? user.username : '';
-    const superUser = user.is_superuser ? <StarTwoTone /> : '';
-    const staffIcon = user.is_staff ? <FontAwesomeIcon icon={faUser} /> : '';
-
     return (
-        0
+        <Container
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'red',
+                padding: '0 20px',
+            }}
+        >
+            <Box>
+                <h1>Welcome Home</h1>
+            </Box>
+            {isAuthenticated
+                ? (
+                    <h2>
+                        {user.username}
+                        {' '}
+                        {user.icon}
+                    </h2>
+                )
+                : (
+                    null
+                )}
+        </Container>
     );
 };
 

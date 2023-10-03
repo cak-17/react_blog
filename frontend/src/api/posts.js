@@ -1,10 +1,20 @@
 import axiosInstance from '.';
 
-class PostsAPI {
+class Posts {
     constructor() {
         this.axios = axiosInstance;
         this.endpoint = '/posts';
     }
+
+    // Fetch Post from API
+    getByID = async (id) => {
+        console.log(`${this.endpoint}/${id}/`);
+        try {
+            const response = await this.axios.get(`${this.endpoint}/${id}/`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) { this.handleApiError(error); }
+    };
 
     // Fetch all Posts from API
     getAll = async () => {
@@ -15,9 +25,9 @@ class PostsAPI {
     };
 
     // Create new Post
-    createPost = async (data) => {
+    createPost = async (postData) => {
         try {
-            const response = await this.axios.post(`${this.endpoint}/`, data);
+            const response = await this.axios.post(`${this.endpoint}/`, postData);
             return response.data;
         } catch (error) { this.handleApiError(error); }
     };
@@ -25,7 +35,7 @@ class PostsAPI {
     // Delete Post by ID
     deletePost = async (id) => {
         try {
-            const response = await this.axios.delete(`${this.endpoint}/${id}`);
+            const response = await this.axios.delete(`${this.endpoint}/${id}/`);
             return response.data;
         } catch (error) { this.handleApiError(error); }
     };
@@ -36,5 +46,7 @@ class PostsAPI {
         throw error;
     }
 }
+
+const PostsAPI = new Posts();
 
 export default PostsAPI;

@@ -1,6 +1,6 @@
 import axiosInstance from '.';
 
-class AuthAPI {
+class Auth {
     constructor() {
         this.axios = axiosInstance;
         this.endpoint = '/core';
@@ -39,4 +39,5 @@ class AuthAPI {
     }
 }
 
+const AuthAPI = new Auth();
 export default AuthAPI;

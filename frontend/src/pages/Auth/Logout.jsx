@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@mui/material';
+import { Box, Button, ButtonGroup } from '@mui/material';
+import BackButton from '../../components/BackButton';
+
 import { logout } from '../../store/authSlice';
-import BackButton from '../BackButton';
-import { ConfirmationNumber } from '@mui/icons-material';
 
 const LogoutPage = () => {
     const dispatch = useDispatch();
@@ -24,12 +24,20 @@ const LogoutPage = () => {
         enqueueSnackbar('You have logged out successfully', 'success');
     };
 
-    const handleLogout = () => {
+    const handleLogout = (e) => {
+        e.preventDefault();
         dispatch(logout(info, navigate));
     };
 
     return (
-        0
+        <Box>
+            <h2>Logout</h2>
+            <p>Are you sure you want to proceed?</p>
+            <ButtonGroup>
+                <Button variant="outlined" onClick={(e) => handleLogout(e)}>Yes</Button>
+                <BackButton />
+            </ButtonGroup>
+        </Box>
     );
 };
 
